@@ -1,7 +1,14 @@
 // YouTube Shorts Blocker - Content Script
 
+// Global state
+let isEnabled = true;
+let observer = null;
+let intervalId = null;
+
 // Function to remove Shorts elements from the page
 function removeShortsElements() {
+  if (!isEnabled) return;
+
   // Remove Shorts button from sidebar (multiple selectors for reliability)
   const shortsButtons = document.querySelectorAll('a[href="/shorts"], a[href="/shorts/"], a[href^="/shorts?"], a[title="Shorts"][href^="/shorts"], a[aria-label="Shorts"][href^="/shorts"]');
   shortsButtons.forEach(button => {
@@ -59,22 +66,76 @@ function removeShortsElements() {
   });
 }
 
-// Initial removal
-removeShortsElements();
+// Start the blocking functionality
+function startBlocking() {
+  console.log('YouTube Shorts Blocker: Active');
 
-// Set up a MutationObserver to handle dynamically loaded content
-// YouTube is a single-page application, so new content loads without page refresh
-const observer = new MutationObserver((mutations) => {
+  // Add class to enable CSS blocking
+  document.documentElement.classList.add('yt-shorts-blocker-enabled');
+
+  // Initial removal
   removeShortsElements();
+
+  // Set up a MutationObserver to handle dynamically loaded content
+  if (!observer) {
+    observer = new MutationObserver((mutations) => {
+      removeShortsElements();
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  // Run periodically as a backup (every 500ms)
+  if (!intervalId) {
+    intervalId = setInterval(removeShortsElements, 500);
+  }
+}
+
+// Stop the blocking functionality
+function stopBlocking() {
+  console.log('YouTube Shorts Blocker: Inactive');
+
+  // Remove class to disable CSS blocking
+  document.documentElement.classList.remove('yt-shorts-blocker-enabled');
+
+  // Stop the observer
+  if (observer) {
+    observer.disconnect();
+    observer = null;
+  }
+
+  // Stop the interval
+  if (intervalId) {
+    clearInterval(intervalId);
+    intervalId = null;
+  }
+}
+
+// Initialize based on stored setting
+chrome.storage.sync.get(['enabled'], function(result) {
+  // Default to enabled if not set
+  isEnabled = result.enabled !== undefined ? result.enabled : true;
+
+  if (isEnabled) {
+    startBlocking();
+  }
 });
 
-// Start observing the document for changes
-observer.observe(document.body, {
-  childList: true,
-  subtree: true
+// Listen for messages from the popup
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'toggleBlocking') {
+    isEnabled = request.enabled;
+
+    if (isEnabled) {
+      startBlocking();
+    } else {
+      stopBlocking();
+    }
+
+    // Reload the page to apply changes
+    location.reload();
+  }
 });
-
-// Also run periodically as a backup (every 500ms)
-setInterval(removeShortsElements, 500);
-
-console.log('YouTube Shorts Blocker: Active');

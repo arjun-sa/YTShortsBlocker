@@ -1,50 +1,51 @@
 /* YouTube Shorts Blocker - Styles */
+/* Only applies when blocking is enabled */
 
 /* Hide Shorts button in sidebar */
-a[href="/shorts"],
-a[href="/shorts/"],
-a[href^="/shorts?"],
-a[title="Shorts"][href^="/shorts"],
-a[aria-label="Shorts"][href^="/shorts"],
-ytd-guide-entry-renderer:has(a[href="/shorts"]),
-ytd-guide-entry-renderer:has(a[href="/shorts/"]),
-ytd-guide-entry-renderer:has(a[title="Shorts"]),
-ytd-mini-guide-entry-renderer:has(a[href="/shorts"]),
-ytd-mini-guide-entry-renderer:has(a[href="/shorts/"]),
-ytd-mini-guide-entry-renderer:has(a[title="Shorts"]) {
+html.yt-shorts-blocker-enabled a[href="/shorts"],
+html.yt-shorts-blocker-enabled a[href="/shorts/"],
+html.yt-shorts-blocker-enabled a[href^="/shorts?"],
+html.yt-shorts-blocker-enabled a[title="Shorts"][href^="/shorts"],
+html.yt-shorts-blocker-enabled a[aria-label="Shorts"][href^="/shorts"],
+html.yt-shorts-blocker-enabled ytd-guide-entry-renderer:has(a[href="/shorts"]),
+html.yt-shorts-blocker-enabled ytd-guide-entry-renderer:has(a[href="/shorts/"]),
+html.yt-shorts-blocker-enabled ytd-guide-entry-renderer:has(a[title="Shorts"]),
+html.yt-shorts-blocker-enabled ytd-mini-guide-entry-renderer:has(a[href="/shorts"]),
+html.yt-shorts-blocker-enabled ytd-mini-guide-entry-renderer:has(a[href="/shorts/"]),
+html.yt-shorts-blocker-enabled ytd-mini-guide-entry-renderer:has(a[title="Shorts"]) {
   display: none !important;
 }
 
 /* Hide Shorts shelf/carousel */
-ytd-reel-shelf-renderer,
-[is-shorts] {
+html.yt-shorts-blocker-enabled ytd-reel-shelf-renderer,
+html.yt-shorts-blocker-enabled [is-shorts] {
   display: none !important;
 }
 
 /* Hide individual Shorts videos in feed */
-ytd-rich-item-renderer:has(ytd-thumbnail-overlay-time-status-renderer[overlay-style="SHORTS"]),
-ytd-rich-item-renderer:has(a[href^="/shorts/"]) {
+html.yt-shorts-blocker-enabled ytd-rich-item-renderer:has(ytd-thumbnail-overlay-time-status-renderer[overlay-style="SHORTS"]),
+html.yt-shorts-blocker-enabled ytd-rich-item-renderer:has(a[href^="/shorts/"]) {
   display: none !important;
 }
 
 /* Hide Shorts from search results */
-ytd-video-renderer:has(a[href^="/shorts/"]) {
+html.yt-shorts-blocker-enabled ytd-video-renderer:has(a[href^="/shorts/"]) {
   display: none !important;
 }
 
 /* Hide Shorts section in recommendations */
-ytd-compact-video-renderer:has(a[href^="/shorts/"]) {
+html.yt-shorts-blocker-enabled ytd-compact-video-renderer:has(a[href^="/shorts/"]) {
   display: none !important;
 }
 
 /* Hide Shorts icon overlay */
-ytd-thumbnail-overlay-time-status-renderer[overlay-style="SHORTS"] {
+html.yt-shorts-blocker-enabled ytd-thumbnail-overlay-time-status-renderer[overlay-style="SHORTS"] {
   display: none !important;
 }
 
 /* Hide any element with shorts-related attributes */
-[is-shorts="true"],
-[shorts-lockup],
-[reel-shelf-renderer] {
+html.yt-shorts-blocker-enabled [is-shorts="true"],
+html.yt-shorts-blocker-enabled [shorts-lockup],
+html.yt-shorts-blocker-enabled [reel-shelf-renderer] {
   display: none !important;
 }

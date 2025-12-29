@@ -3,7 +3,11 @@
   "name": "YouTube Shorts Blocker",
   "version": "1.0.0",
   "description": "Removes YouTube Shorts from the YouTube interface including the sidebar button and feed content",
-  "permissions": [],
+  "permissions": ["storage"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "YouTube Shorts Blocker"
+  },
   "content_scripts": [
     {
       "matches": [

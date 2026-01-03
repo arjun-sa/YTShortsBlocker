@@ -1,7 +1,8 @@
 # YouTube Shorts Blocker
 
 A Chrome extension that removes all YouTube Shorts content from the YouTube interface.
-Pending Chrome Web Store approval.
+
+Available on the Chrome Web Store -> https://chromewebstore.google.com/detail/youtube-shorts-blocker/kdeaaehibdnicomiglpcjpmmkedoblcn?authuser=1
 
 ## Features
 
